@@ -1,7 +1,7 @@
 const User = require("../models/User");
 
 async function show(req, res) {
-  const user = await User.findById({ id: req.params.id });
+  const user = await User.findById(req.params.id);
   return res.json({
     firstname: user.firstname,
     lastname: user.lastname,
