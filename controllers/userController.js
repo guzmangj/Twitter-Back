@@ -3,10 +3,8 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const { formattedData } = require("./tweetController");
 
-// Display a listing of the resource.
 async function index(req, res) {}
 
-// Display the specified resource.
 async function show(req, res) {
   const profile = true;
   const loggedUser = await User.findById(req.session.passport.user);
@@ -17,18 +15,13 @@ async function show(req, res) {
     allTweets[i].formattedData = formattedData(allTweets[i].date);
   }
 
-  // console.log("user: " + user.id);
-  // console.log("loggedUser: " + loggedUser.id);
-
   return res.render("pages/profile", { allTweets, user, profile, loggedUser });
 }
 
-// Show the form for creating a new resource
 async function create(req, res) {
-  return res.render("pages/register"); //ajustar ruta
+  return res.render("pages/register");
 }
 
-// Store a newly created resource in storage.
 async function store(req, res) {
   const register = await User.updateOne(
     {
@@ -57,13 +50,6 @@ async function store(req, res) {
   }
 }
 
-// Show the form for editing the specified resource.
-async function edit(req, res) {}
-
-// Update the specified resource in storage.
-async function update(req, res) {}
-
-// Remove the specified resource from storage.
 async function destroy(req, res) {}
 
 /*async function like(req, res) {
@@ -129,8 +115,6 @@ module.exports = {
   show,
   create,
   store,
-  edit,
-  update,
   destroy,
   showFollowers,
   showFollowing,
