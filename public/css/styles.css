@@ -1,0 +1,160 @@
+:root {
+  --color-principal: #1d9bf0;
+  --color-secundario: #064874;
+}
+
+.loginSide {
+  background: var(--color-principal);
+}
+
+.btn-login {
+  color: white;
+  background: var(--color-principal);
+}
+
+@media (max-width: 767px) {
+  .login-container {
+    border-radius: 0.5rem;
+  }
+}
+
+.btn-logout {
+  color: white;
+  text-decoration: none;
+}
+
+.icon-end {
+  align-items: end;
+}
+
+.btn-del {
+  border: none;
+  background-color: white;
+}
+.small {
+  color: rgb(103, 106, 125);
+  font-weight: 280;
+}
+
+#divImageProfile {
+  position: absolute;
+  top: -70px;
+  left: 10px;
+  width: 140px;
+  height: 140px;
+  border-radius: 70px;
+  border: 5px solid white;
+  overflow: hidden;
+}
+
+#imageProfile {
+  width: 100%;
+  height: 100%;
+  border-radius: 70px;
+  object-fit: cover;
+}
+
+#logoutButton {
+  position: fixed;
+  bottom: 0;
+  width: 12.3rem;
+}
+
+@media (min-width: 1400px) {
+  .sidebarTotal {
+    width: 22rem;
+  }
+  .flashMessage {
+    width: 27.7rem;
+    bottom: 44.5rem;
+    position: fixed;
+  }
+}
+
+@media (max-width: 1399px) {
+  #logoutButton {
+    width: 10.3rem;
+    position: fixed;
+    bottom: 0;
+  }
+  .tweetButton {
+    width: 10.3rem !important;
+  }
+  .sidebarTotal {
+    width: 20rem;
+  }
+}
+
+@media (max-width: 1199px) {
+  .home {
+    display: none;
+  }
+  .profile {
+    display: none;
+  }
+  .tweetText {
+    display: none;
+  }
+  .tweetImage {
+    display: block !important;
+  }
+  .tweetButton {
+    padding: 0.8rem;
+    width: 100% !important;
+    height: 100%;
+    border-radius: 50% !important;
+  }
+  .logoutText {
+    display: none;
+  }
+  .logoutImage {
+    display: block !important;
+    font-size: 1.8rem;
+  }
+  #logoutButton {
+    padding: 0.8rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50% !important;
+    position: fixed;
+    bottom: 0;
+  }
+  .sidebarTotal {
+    width: 20rem;
+  }
+  .flashMessage {
+    width: 18.5rem;
+    bottom: 44.5rem;
+    position: fixed;
+  }
+}
+
+@media (max-width: 991px) {
+  #logoutButton {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50% !important;
+    position: fixed;
+    bottom: 0;
+  }
+  .logoutImage {
+    font-size: 1.5rem;
+  }
+  .tweetImage {
+    display: block !important;
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+  .tweetButton {
+    padding: 0.8rem;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50% !important;
+  }
+
+  .flashMessage {
+    width: 19.3rem;
+    bottom: 44.5rem;
+    position: fixed;
+  }
+}

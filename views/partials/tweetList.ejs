@@ -1,0 +1,78 @@
+<% for(let tweet of allTweets){ %>
+<div class="tweet border border-top-0 p-3">
+  <div class="tweet-header d-flex" style="margin-bottom: 0px 0px 10px">
+    <div>
+      <a style="text-decoration: none; color: black" href="/usuarios/<%= tweet.user.id %>">
+        <img
+          src="<%= tweet.user.image %>"
+          alt="Avatar del usuario"
+          class="tweet-avatar"
+          style="width: 45px; height: 45px; border-radius: 50%; margin-right: 10px"
+      /></a>
+    </div>
+    <div class="w-100">
+      <div class="d-flex justify-content-between" style="height: 20%">
+        <div class="tweet-fullname d-flex" style="font-weight: bold">
+          <a style="text-decoration: none; color: black" href="/usuarios/<%= tweet.user.id %>"
+            ><%= tweet.user.firstname %> <%= tweet.user.lastname %></a
+          >
+          <span class="tweet-username fw-light" style="color: #888"
+            ><a
+              style="text-decoration: none; color: #888; margin-left: 0.3rem"
+              href="/usuarios/<%= tweet.user.id %>"
+              >@<%= tweet.user.username%></a
+            >
+            &bull; <%= tweet.formattedData %>
+          </span>
+        </div>
+      </div>
+      <div class="tweet-content mt-1" style="margin-bottom: 10px; height: 40%">
+        <%= tweet.content %>
+      </div>
+      <div
+        class="tweet-footer"
+        style="
+          display: flex;
+          justify-content: space-between;
+          color: #888;
+          font-size: 12px;
+          height: 20%;
+        "
+      >
+        <div class="tweet-actions d-flex align-items-center">
+          <% if(tweet.likes.includes(loggedUser.id)){%>
+          <div>
+            <form method="post" action="/dislike/<%= tweet.id %>?_method=UPDATE">
+              <button type="submit" class="btn-del mb-1">
+                <%- include ("../../public/img/icons/like-active.svg") %>
+              </button>
+            </form>
+          </div>
+          <div><%= tweet.likes.length %></div>
+          <% } else {%>
+          <div>
+            <form method="post" action="/like/<%= tweet.id %>?_method=UPDATE">
+              <button type="submit" class="btn-del mb-1">
+                <%- include ("../../public/img/icons/like.svg") %>
+              </button>
+            </form>
+          </div>
+          <div><%= tweet.likes.length %></div>
+          <% }%>
+        </div>
+        <% if(loggedUser.id === user.id && profile){%>
+        <div>
+          <form method="post" action="/tweet/<%=tweet._id%>?_method=DELETE">
+            <i class="icon-end"
+              ><button type="submit" class="btn-del">
+                <%-include("../../public/img/icons/delete.svg")%>
+              </button></i
+            >
+          </form>
+        </div>
+        <% }%>
+      </div>
+    </div>
+  </div>
+</div>
+<%}%>
