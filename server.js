@@ -3,9 +3,6 @@ const path = require("path");
 const methodOverride = require("method-override");
 const express = require("express");
 
-const sessions = require("./sessions");
-const passport = require("passport");
-const passportConfig = require("./passport");
 const routes = require("./routes");
 
 const makeUserAvailableInViews = require("./middlewares/makeUserAvailableInViews");
@@ -19,9 +16,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
-sessions(app);
-app.use(passport.session());
-passportConfig();
 app.use(makeUserAvailableInViews);
 routes(app);
 

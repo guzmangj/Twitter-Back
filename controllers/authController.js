@@ -1,5 +1,3 @@
-const passport = require("passport");
-
 async function login(req, res) {
   passport.authenticate("local", {
     successRedirect: "/",
