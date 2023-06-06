@@ -3,20 +3,15 @@ const User = require("../models/User");
 
 async function index(req, res) {
   const tweets = await Tweet.find();
-  for (let i = 0; i < allTweets.length; i++) {
-    allTweets[i].formattedData = formattedData(allTweets[i].date);
+  for (let i = 0; i < tweets.length; i++) {
+    tweets[i].formattedData = formattedData(tweets[i].date);
   }
-  return res.json({
-    content: tweets.content,
-    likes: tweets.likes,
-    date: tweets.date,
-    user: tweets.user,
-  });
+  return res.json(tweets);
 }
 
 async function store(req, res) {
   const newTweet = new Tweet({
-    content: req.body.tweetContent,
+    content: req.body.content,
     likes: [],
     date: new Date(),
     user: req.auth.id,
