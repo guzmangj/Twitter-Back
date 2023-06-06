@@ -1,7 +1,6 @@
 const { mongoose, Schema } = require("../db");
 const mongoosePaginate = require("mongoose-paginate-v2");
 
-// Crear esquema y modelo User...
 const tweetSchema = new Schema({
   content: {
     type: String,
