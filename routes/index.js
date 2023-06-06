@@ -1,9 +1,9 @@
 const userRoutes = require("./userRoutes");
 const tweetRoutes = require("./tweetRoutes");
-const loginRoutes = require("./loginRoutes");
+const authRoutes = require("./authRoutes");
 
 module.exports = (app) => {
   app.use("/", userRoutes);
-  app.use("/", loginRoutes);
+  app.use("/", authRoutes);
   app.use("/", tweetRoutes);
 };
