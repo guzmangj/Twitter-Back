@@ -1,4 +1,4 @@
-async function login(req, res) {
+/*async function login(req, res) {
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",
@@ -17,4 +17,4 @@ async function logout(req, res) {
 module.exports = {
   login,
   logout,
-};
+};*/
