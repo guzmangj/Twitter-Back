@@ -2,43 +2,35 @@ const Tweet = require("../models/Tweet");
 const User = require("../models/User");
 
 async function index(req, res) {
-  const limit = 20;
-  const page = parseInt(req.query.page, 10) || 1;
-  const options = { page, limit, populate: { path: "user" } };
-  const profile = false;
-  const loggedUser = await User.findById(req.session.passport.user);
   const tweets = await Tweet.find();
-  const lastPage = limit * page >= tweets.length;
-  const { docs: allTweets } = await Tweet.paginate({}, options);
-
   for (let i = 0; i < allTweets.length; i++) {
     allTweets[i].formattedData = formattedData(allTweets[i].date);
   }
-  return res.render("pages/index", { allTweets, profile, loggedUser, page, lastPage });
+  return res.json({
+    content: tweets.content,
+    likes: tweets.likes,
+    date: tweets.date,
+    user: tweets.user,
+  });
 }
 
 async function store(req, res) {
-  const user = req.user;
   const newTweet = new Tweet({
     content: req.body.tweetContent,
     likes: [],
     date: new Date(),
-    user: user._id,
+    user: req.auth.id,
   });
-
   await newTweet.save();
-  console.log(newTweet);
-
-  //return res.render(path.join("pages", "index"), { newTweet });
-  return res.redirect("/");
+  return res.json("Se creó un nuevo Tweet");
 }
 
-async function destroy(req, res) {
-  const id = req.params.id;
-  await Tweet.deleteOne({ _id: id });
+// async function destroy(req, res) {
+//   const id = req.params.id;
+//   await Tweet.deleteOne({ _id: id });
 
-  return res.redirect("back");
-}
+//   return res.redirect("back");
+// }
 
 function formattedData(dateTweet) {
   const currentDate = new Date();

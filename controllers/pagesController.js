@@ -13,7 +13,7 @@ async function token(req, res) {
   }
 
   const token = jwt.sign({ id: user.id }, process.env.SECRET);
-  return res.json({ token });
+  return res.json({ id: user.id, token: token });
 }
 
 module.exports = {
