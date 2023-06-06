@@ -5,7 +5,7 @@ const redirectIfAuthenticated = require("../middlewares/redirectIfAuthenticated"
 
 router.get("/login", redirectIfAuthenticated, pagesController.showLogin);
 
-router.get("/home", pagesController.showHome);
+//logout
 
 router.get("*", function (req, res) {
   res.status(404).render("pages/404");
