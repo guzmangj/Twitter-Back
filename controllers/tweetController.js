@@ -20,12 +20,11 @@ async function store(req, res) {
   return res.json("Se creó un nuevo Tweet");
 }
 
-// async function destroy(req, res) {
-//   const id = req.params.id;
-//   await Tweet.deleteOne({ _id: id });
-
-//   return res.redirect("back");
-// }
+async function destroy(req, res) {
+  const id = req.params.id;
+  await Tweet.deleteOne({ _id: id });
+  return res.json("Se eliminó el tweet con éxito");
+}
 
 function formattedData(dateTweet) {
   const currentDate = new Date();
@@ -56,6 +55,6 @@ function formattedData(dateTweet) {
 module.exports = {
   index,
   store,
-  // destroy,
+  destroy,
   formattedData,
 };
