@@ -1,6 +1,5 @@
 const Tweet = require("../models/Tweet");
 const User = require("../models/User");
-const bcrypt = require("bcryptjs");
 const { formattedData } = require("./tweetController");
 
 async function show(req, res) {

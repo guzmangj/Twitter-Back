@@ -1,7 +1,7 @@
 const Tweet = require("../models/Tweet");
 const User = require("../models/User");
 
-async function indexTweet(req, res) {
+async function index(req, res) {
   const limit = 20;
   const page = parseInt(req.query.page, 10) || 1;
   const options = { page, limit, populate: { path: "user" } };
@@ -17,7 +17,7 @@ async function indexTweet(req, res) {
   return res.render("pages/index", { allTweets, profile, loggedUser, page, lastPage });
 }
 
-async function storeTweet(req, res) {
+async function store(req, res) {
   const user = req.user;
   const newTweet = new Tweet({
     content: req.body.tweetContent,
@@ -31,24 +31,6 @@ async function storeTweet(req, res) {
 
   //return res.render(path.join("pages", "index"), { newTweet });
   return res.redirect("/");
-}
-
-async function likeTweet(req, res) {
-  const id = req.params.id;
-  const tweet = await Tweet.findById(id);
-  tweet.likes.addToSet(req.user._id);
-  await tweet.save();
-
-  return res.redirect("back");
-}
-
-async function dislikeTweet(req, res) {
-  const id = req.params.id;
-  const tweet = await Tweet.findById(id);
-  tweet.likes.pull(req.user._id);
-  await tweet.save();
-
-  return res.redirect("back");
 }
 
 async function destroy(req, res) {
@@ -85,10 +67,8 @@ function formattedData(dateTweet) {
 }
 
 module.exports = {
-  indexTweet,
-  storeTweet,
+  index,
+  store,
   destroy,
   formattedData,
-  likeTweet,
-  dislikeTweet,
 };
