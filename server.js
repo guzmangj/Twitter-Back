@@ -2,6 +2,7 @@ require("dotenv").config();
 const path = require("path");
 const methodOverride = require("method-override");
 const express = require("express");
+const cors = require("cors");
 
 const routes = require("./routes");
 
@@ -15,6 +16,7 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 
 app.set("view engine", "ejs");
 
