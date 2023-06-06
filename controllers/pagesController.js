@@ -8,7 +8,7 @@ async function token(req, res) {
     return res.json("Credenciales inválidas");
   }
 
-  if (!user.comparePassword(req.body.passoword)) {
+  if (!user.comparePassword(req.body.password)) {
     return res.json("Credenciales inválidas");
   }
 
