@@ -1,47 +1,20 @@
-/**
- * Este archivo se utiliza en un proyecto donde se está utlizando server-side
- * rendering (ej: con un motor de templates como EJS). Tiene como objetivo
- * mostrar (renderear) páginas que no están directamente relacionandas con
- * una entidad del proyecto.
- *
- * Ejemplos:
- *   - Página de inicio (Home).
- *   - Página de contacto.
- *   - Página con política de privacidad.
- *   - Página con términos y condiciones.
- *   - Página con preguntas frecuentes (FAQ).
- *   - Etc.
- *
- * En caso de estar creando una API, este controlador carece de sentido y
- * no debería existir.
- */
+const { User } = require("../models/User");
+const jwt = require("jsonwebtoken");
 
-async function showLogin(req, res) {
-  res.render("pages/login");
+async function token(req, res) {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return res.json("Credenciales inválidas");
+  }
+
+  if (!user.comparePassword(req.body.passoword)) {
+    return res.json("Credenciales inválidas");
+  }
+
+  const token = jwt.sign({ id: user.id }, "secretString");
+  return res.json({ token });
 }
-
-async function showHome(req, res) {
-  res.render("pages/home");
-}
-
-async function showContact(req, res) {
-  res.render("pages/contact");
-}
-
-async function showAboutUs(req, res) {
-  res.render("pages/aboutUs");
-}
-
-async function show404(req, res) {
-  res.status(404).render("pages/404");
-}
-
-// Otros handlers...
-// ...
 
 module.exports = {
-  showHome,
-  showContact,
-  showAboutUs,
-  showLogin,
+  token,
 };
