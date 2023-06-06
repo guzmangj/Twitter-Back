@@ -61,6 +61,6 @@ function formattedData(dateTweet) {
 module.exports = {
   index,
   store,
-  destroy,
+  // destroy,
   formattedData,
 };
