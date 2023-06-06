@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { User } = require("../models/User");
 const jwt = require("jsonwebtoken");
 
@@ -11,7 +12,7 @@ async function token(req, res) {
     return res.json("Credenciales inválidas");
   }
 
-  const token = jwt.sign({ id: user.id }, "secretString");
+  const token = jwt.sign({ id: user.id }, process.env.SECRET);
   return res.json({ token });
 }
 
