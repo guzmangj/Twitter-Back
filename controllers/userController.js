@@ -21,6 +21,7 @@ async function store(req, res) {
     lastname: req.body.lastname,
     email: req.body.email,
     password: req.body.password,
+    username: req.body.username,
   });
   await user.save();
   return res.json("Se ha creado un nuevo usuario");
