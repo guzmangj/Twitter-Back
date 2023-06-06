@@ -9,6 +9,6 @@ router.post(
   checkJwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
   tweetController.store,
 );
-// router.delete("/tweets/:id", tweetController.destroy);
+router.delete("/tweets/:id", tweetController.destroy);
 
 module.exports = router;
