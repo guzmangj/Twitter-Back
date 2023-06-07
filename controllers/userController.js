@@ -1,5 +1,10 @@
 const User = require("../models/User");
 
+async function index(req, res) {
+  const users = await User.find();
+  return res.json(users);
+}
+
 async function show(req, res) {
   const user = await User.findById(req.params.id);
   return res.json({
@@ -29,4 +34,5 @@ async function store(req, res) {
 module.exports = {
   show,
   store,
+  index,
 };
