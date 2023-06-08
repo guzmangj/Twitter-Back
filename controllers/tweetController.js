@@ -2,7 +2,7 @@ const Tweet = require("../models/Tweet");
 const User = require("../models/User");
 
 async function index(req, res) {
-  const tweets = await Tweet.find();
+  const tweets = await Tweet.find().populate("user");
   for (let i = 0; i < tweets.length; i++) {
     tweets[i].formattedData = formattedData(tweets[i].date);
   }
