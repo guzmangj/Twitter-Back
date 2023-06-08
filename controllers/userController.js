@@ -19,6 +19,21 @@ async function show(req, res) {
   });
 }
 
+async function showLoggedUser(req, res) {
+  const user = await User.findById(req.auth.id);
+  return res.json({
+    id: user._id,
+    firstname: user.firstname,
+    lastname: user.lastname,
+    email: user.email,
+    username: user.username,
+    image: user.image,
+    description: user.description,
+    followers: user.followers,
+    following: user.following,
+  });
+}
+
 async function store(req, res) {
   const user = await new User({
     firstname: req.body.firstname,
@@ -35,4 +50,5 @@ module.exports = {
   show,
   store,
   index,
+  showLoggedUser,
 };

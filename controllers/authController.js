@@ -9,7 +9,6 @@ async function token(req, res) {
     return res.json("Credenciales inválidas");
   } else {
     const result = await user.comparePassword(req.body.password);
-    console.log(result);
     if (result) {
       const token = jwt.sign({ id: user.id }, process.env.SECRET);
       return res.json({ token });
