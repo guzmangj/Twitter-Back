@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const formidable = require("formidable");
 
 async function index(req, res) {
   const users = await User.find();
@@ -35,14 +36,29 @@ async function showLoggedUser(req, res) {
 }
 
 async function store(req, res) {
-  const user = await new User({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    password: req.body.password,
-    username: req.body.username,
+  const form = formidable({
+    multiples: false,
+    uploadDir: __dirname + "/../public/img",
+    keepExtensions: true,
   });
-  await user.save();
+  form.parse(req, async (err, fields, files) => {
+    try {
+      const { firstname, lastname, email, password, username } = fields;
+      const user = await new User({
+        firstname,
+        lastname,
+        email,
+        password,
+        username,
+        image: files.image.newFilename,
+      });
+      await user.save();
+    } catch (err) {
+      console.log({ "Error al registrar un usuario": err });
+      res.json(err);
+    }
+  });
+
   return res.json("Se ha creado un nuevo usuario");
 }
 
