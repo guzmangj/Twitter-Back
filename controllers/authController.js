@@ -9,11 +9,12 @@ async function token(req, res) {
     return res.json("Credenciales inválidas");
   } else {
     const result = await user.comparePassword(req.body.password);
-    if (result) {
-      const token = jwt.sign({ id: user.id }, process.env.SECRET);
-      return res.json({ token });
-    } else {
+    if (!result) {
       return res.json("Contraseña inválida");
+    } else {
+      const { username, email, firstname, lastname, id, image, description } = user;
+      const token = jwt.sign({ id: user.id }, process.env.SECRET);
+      return res.json({ token, username, email, firstname, lastname, id, image, description });
     }
   }
 }
