@@ -4,7 +4,7 @@ const userController = require("../controllers/userController");
 const { expressjwt: checkJwt } = require("express-jwt");
 
 router.get("/user", userController.index);
-router.get("/user/:id", userController.show);
+router.get("/profile/:id", userController.show);
 router.get(
   "/profile",
   checkJwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
