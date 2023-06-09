@@ -62,18 +62,19 @@ async function store(req, res) {
 }
 
 async function storeFollower(req, res) {
-  const targetUser = await User.findById(req.params.id);
+  console.log(req.body);
+  const targetUser = await User.findById(req.body.follower._id);
   const loggedUser = await User.findById(req.auth.id);
   const checkFollowing = loggedUser.following.includes(targetUser.id);
   if (!checkFollowing) {
     loggedUser.following.push(targetUser.id);
-    targetUser.followers.push(loggedUser.id);
+    targetUser.followers.push(loggedUser);
   } else {
-    let indexOfTargetUser = targetUser.following.indexOf(loggedUser.id);
+    let indexOfTargetUser = targetUser.following.indexOf(loggedUser);
     if (indexOfTargetUser !== -1) {
       targetUser.following.splice(indexOfTargetUser, 1);
     }
-    let indexOfLoggedUser = targetUser.followers.indexOf(loggedUser.id);
+    let indexOfLoggedUser = targetUser.followers.indexOf(loggedUser);
     if (indexOfLoggedUser !== -1) {
       targetUser.followers.splice(indexOfLoggedUser, 1);
     }
