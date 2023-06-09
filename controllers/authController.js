@@ -12,9 +12,21 @@ async function token(req, res) {
     if (!result) {
       return res.json("Contraseña inválida");
     } else {
-      const { username, email, firstname, lastname, id, image, description } = user;
+      const { username, email, firstname, lastname, id, image, description, following, followers } =
+        user;
       const token = jwt.sign({ id: user.id }, process.env.SECRET);
-      return res.json({ token, username, email, firstname, lastname, id, image, description });
+      return res.json({
+        token,
+        username,
+        email,
+        firstname,
+        lastname,
+        id,
+        image,
+        description,
+        following,
+        followers,
+      });
     }
   }
 }

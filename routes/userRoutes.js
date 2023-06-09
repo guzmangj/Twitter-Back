@@ -3,14 +3,8 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const { expressjwt: checkJwt } = require("express-jwt");
 
-router.get("/user", userController.index);
-router.get("/profile/:id", userController.show);
-router.get(
-  "/profile",
-  checkJwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
-  userController.showLoggedUser,
-);
-
+router.get("/user/:id", userController.show);
 router.post("/user", userController.store);
+router.post("/user/:id/follow", userController.storeFollower);
 
 module.exports = router;

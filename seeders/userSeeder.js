@@ -31,6 +31,8 @@ module.exports = async () => {
       password: await bcrypt.hash("123456", 5),
       image: faker.image.avatar(),
       description: faker.lorem.sentence().slice(0, 120),
+      following: [],
+      followers: [],
     });
   }
   await User.insertMany(users);
@@ -38,13 +40,12 @@ module.exports = async () => {
   console.log("Se crearon los usuarios.");
 
   const allUsers = await User.find({});
-  for (let i = 0; i < allUsers.length; i++) {
+  for (const user of allUsers) {
     const followers = await fakeFollowers();
-    const user = allUsers[i];
-    for (let j = 0; j < followers.length; j++) {
-      const element = followers[j];
-      user.followers.push(element);
-      user.following.push(element);
+    for (const follower of followers) {
+      user.followers.push(follower);
+      follower.following.push(user);
+      await follower.save();
     }
     await user.save();
   }
@@ -53,11 +54,7 @@ module.exports = async () => {
   console.log("[Database] Se corrió el seeder de Users.");
 };
 async function fakeFollowers() {
-  const followers = [];
-  const users = await User.find({});
-  for (let i = 0; i < Math.floor(Math.random() * users.length); i++) {
-    const element = users[i];
-    followers.push(element._id);
-  }
+  const followersQuantity = Math.floor(Math.random() * 30);
+  const followers = await User.find({}).skip(followersQuantity);
   return followers;
 }
