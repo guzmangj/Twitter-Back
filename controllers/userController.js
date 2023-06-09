@@ -61,8 +61,31 @@ async function store(req, res) {
   return res.json("Se ha creado un nuevo usuario");
 }
 
+async function storeFollower(req, res) {
+  const targetUser = await User.findById(req.params.id);
+  const loggedUser = await User.findById(req.auth.id);
+  const checkFollowing = loggedUser.following.includes(targetUser.id);
+  if (!checkFollowing) {
+    loggedUser.following.push(targetUser.id);
+    targetUser.followers.push(loggedUser.id);
+  } else {
+    let indexOfTargetUser = targetUser.following.indexOf(loggedUser.id);
+    if (indexOfTargetUser !== -1) {
+      targetUser.following.splice(indexOfTargetUser, 1);
+    }
+    let indexOfLoggedUser = targetUser.followers.indexOf(loggedUser.id);
+    if (indexOfLoggedUser !== -1) {
+      targetUser.followers.splice(indexOfLoggedUser, 1);
+    }
+  }
+  await targetUser.save();
+  await loggedUser.save();
+  return res.json("Estás siguiendo a este usuario");
+}
+
 module.exports = {
   show,
   store,
   showLoggedUser,
+  storeFollower,
 };
