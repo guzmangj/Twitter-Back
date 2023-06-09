@@ -1,13 +1,11 @@
 const User = require("../models/User");
 const formidable = require("formidable");
 
-async function index(req, res) {
-  const users = await User.find();
-  return res.json(users);
-}
-
 async function show(req, res) {
   const user = await User.findById(req.params.id);
+  const followers = await User.find({ _id: { $in: user.followers } });
+  const following = await User.find({ _id: { $in: user.following } });
+
   return res.json({
     firstname: user.firstname,
     lastname: user.lastname,
@@ -15,8 +13,9 @@ async function show(req, res) {
     username: user.username,
     image: user.image,
     description: user.description,
-    followers: user.followers,
-    following: user.following,
+    followers: followers,
+    following: following,
+    id: user._id,
   });
 }
 
@@ -65,6 +64,5 @@ async function store(req, res) {
 module.exports = {
   show,
   store,
-  index,
   showLoggedUser,
 };
