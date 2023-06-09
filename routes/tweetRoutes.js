@@ -10,5 +10,6 @@ router.post(
   tweetController.store,
 );
 router.delete("/tweets/:id", tweetController.destroy);
-
+router.post("/like/:id", tweetController.likeTweet);
+router.post("/dislike/:id", tweetController.dislikeTweet);
 module.exports = router;
