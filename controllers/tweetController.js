@@ -21,8 +21,8 @@ async function store(req, res) {
 }
 
 async function destroy(req, res) {
-  const id = req.params.id;
-  await Tweet.deleteOne({ _id: id });
+  console.log(req.params.id);
+  await Tweet.findByIdAndDelete(req.params.id);
   return res.json("Se eliminó el tweet con éxito");
 }
 
