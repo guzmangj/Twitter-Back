@@ -17,7 +17,7 @@ async function store(req, res) {
     user: req.auth.id,
   });
   await newTweet.save();
-  return res.json("Se creó un nuevo Tweet");
+  return res.json(newTweet);
 }
 
 async function destroy(req, res) {
@@ -51,10 +51,31 @@ function formattedData(dateTweet) {
 
   return formattedData;
 }
+async function likeTweet(req, res) {
+  const tweetId = req.params.id;
+  const userId = req.body.userId;
+  const tweet = await Tweet.findById(tweetId);
+  tweet.likes.addToSet(userId);
+  await tweet.save();
+  console.log(req.body);
+  console.log("liked", userId);
+  return res.json("Tweet liked");
+}
 
+async function dislikeTweet(req, res) {
+  const tweetId = req.params.id;
+  const userId = req.body.userId;
+  const tweet = await Tweet.findById(tweetId);
+  tweet.likes.pull(userId);
+  await tweet.save();
+  console.log("disliked", userId);
+  return res.json("Tweet disliked");
+}
 module.exports = {
   index,
   store,
   destroy,
+  likeTweet,
+  dislikeTweet,
   formattedData,
 };
