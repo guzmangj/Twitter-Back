@@ -5,5 +5,6 @@ const { expressjwt: checkJwt } = require("express-jwt");
 
 router.get("/user/:id", userController.show);
 router.post("/user", userController.store);
+router.post("/user/:id/follow", userController.storeFollower);
 
 module.exports = router;
