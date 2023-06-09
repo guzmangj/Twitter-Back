@@ -17,7 +17,7 @@ async function store(req, res) {
     user: req.auth.id,
   });
   await newTweet.save();
-  return res.json("Se creó un nuevo Tweet");
+  return res.json(newTweet);
 }
 
 async function destroy(req, res) {
