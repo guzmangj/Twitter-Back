@@ -31,8 +31,8 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  followers: [mongoose.Schema.Types.ObjectId],
-  following: [mongoose.Schema.Types.ObjectId],
+  followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+  following: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
 userSchema.methods.comparePassword = async function comparePassword(password) {
