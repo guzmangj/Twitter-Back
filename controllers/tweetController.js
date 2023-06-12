@@ -1,6 +1,6 @@
 const Tweet = require("../models/Tweet");
 const User = require("../models/User");
-
+const mongoose = require("mongoose");
 async function index(req, res) {
   const tweets = await Tweet.find().populate("user");
   for (let i = 0; i < tweets.length; i++) {
@@ -55,10 +55,14 @@ async function likeTweet(req, res) {
   const tweetId = req.params.id;
   const userId = req.body.userId;
   const tweet = await Tweet.findById(tweetId);
-  tweet.likes.addToSet(userId);
+  const userIdObject = new mongoose.Types.ObjectId(userId);
+
+  tweet.likes.addToSet(userIdObject);
   await tweet.save();
+
   console.log(req.body);
-  console.log("liked", userId);
+  console.log("liked", userIdObject);
+
   return res.json("Tweet liked");
 }
 
@@ -66,9 +70,11 @@ async function dislikeTweet(req, res) {
   const tweetId = req.params.id;
   const userId = req.body.userId;
   const tweet = await Tweet.findById(tweetId);
-  tweet.likes.pull(userId);
+  const userIdObject = new mongoose.Types.ObjectId(userId);
+
+  tweet.likes.pull(userIdObject);
+  console.log("disliked", userIdObject);
   await tweet.save();
-  console.log("disliked", userId);
   return res.json("Tweet disliked");
 }
 module.exports = {
