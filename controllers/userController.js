@@ -49,7 +49,6 @@ async function store(req, res) {
 }
 
 async function storeFollower(req, res) {
-  console.log(req.body);
   const targetUser = await User.findById(req.body.userData.id);
   const loggedUser = await User.findById(req.auth.id);
   const checkFollowing = loggedUser.following.includes(targetUser.id);
