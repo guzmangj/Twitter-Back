@@ -2,11 +2,21 @@ const Tweet = require("../models/Tweet");
 const User = require("../models/User");
 
 async function index(req, res) {
-  const tweets = await Tweet.find().populate("user");
-  for (let i = 0; i < tweets.length; i++) {
-    tweets[i].formattedData = formattedData(tweets[i].date);
+  const filterBy = req.query.id;
+  console.log(filterBy);
+  if (!filterBy) {
+    const tweets = await Tweet.find().populate("user");
+    for (let i = 0; i < tweets.length; i++) {
+      tweets[i].formattedData = formattedData(tweets[i].date);
+    }
+    return res.json(tweets);
+  } else {
+    const tweets = await Tweet.find({ user: req.query.id }).populate("user");
+    for (let i = 0; i < tweets.length; i++) {
+      tweets[i].formattedData = formattedData(tweets[i].date);
+    }
+    return res.json(tweets);
   }
-  return res.json(tweets);
 }
 
 async function show(req, res) {
@@ -14,14 +24,15 @@ async function show(req, res) {
 }
 
 async function store(req, res) {
-  const newTweet = new Tweet({
+  const user = await User.findById(req.auth.id);
+  const newTweet = await Tweet.create({
     content: req.body.content,
     likes: [],
     date: new Date(),
     user: req.auth.id,
   });
-  await newTweet.save();
-  return res.json(newTweet);
+
+  return res.json({ newTweet, user });
 }
 
 async function update(req, res) {
