@@ -29,7 +29,6 @@ async function update(req, res) {
 }
 
 async function destroy(req, res) {
-  console.log(req.params.id);
   await Tweet.findByIdAndDelete(req.params.id);
   return res.json("Se eliminó el tweet con éxito");
 }
