@@ -2,27 +2,44 @@ const Tweet = require("../models/Tweet");
 const User = require("../models/User");
 const mongoose = require("mongoose");
 async function index(req, res) {
-  const tweets = await Tweet.find().populate("user");
-  for (let i = 0; i < tweets.length; i++) {
-    tweets[i].formattedData = formattedData(tweets[i].date);
+  const filterBy = req.query.id;
+  if (!filterBy) {
+    const tweets = await Tweet.find().populate("user", "-password");
+    for (let i = 0; i < tweets.length; i++) {
+      tweets[i].formattedData = formattedData(tweets[i].date);
+    }
+    return res.json(tweets);
+  } else {
+    const tweets = await Tweet.find({ user: req.query.id }).populate("user", "-password");
+    for (let i = 0; i < tweets.length; i++) {
+      tweets[i].formattedData = formattedData(tweets[i].date);
+    }
+    return res.json(tweets);
   }
-  return res.json(tweets);
+}
+
+async function show(req, res) {
+  // El alcance de este proyecto no lo incluye
 }
 
 async function store(req, res) {
-  const newTweet = new Tweet({
+  const user = await User.findById(req.auth.id);
+  const newTweet = await Tweet.create({
     content: req.body.content,
     likes: [],
     date: new Date(),
     user: req.auth.id,
   });
-  await newTweet.save();
-  return res.json("Se creó un nuevo Tweet");
+
+  return res.json({ newTweet, user });
+}
+
+async function update(req, res) {
+  // El alcance de este proyecto no lo incluye
 }
 
 async function destroy(req, res) {
-  const id = req.params.id;
-  await Tweet.deleteOne({ _id: id });
+  await Tweet.findByIdAndDelete(req.params.id);
   return res.json("Se eliminó el tweet con éxito");
 }
 
@@ -79,7 +96,9 @@ async function dislikeTweet(req, res) {
 }
 module.exports = {
   index,
+  show,
   store,
+  update,
   destroy,
   likeTweet,
   dislikeTweet,

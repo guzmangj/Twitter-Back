@@ -13,6 +13,14 @@ const tweetSchema = new Schema({
     ref: "User",
   },
 });
+
+tweetSchema.methods.toJSON = function () {
+  const tweet = this.toObject();
+  tweet.id = tweet._id.toString();
+  delete tweet._id;
+  return tweet;
+};
+
 tweetSchema.plugin(mongoosePaginate);
 const Tweet = mongoose.model("Tweet", tweetSchema);
 module.exports = Tweet;
