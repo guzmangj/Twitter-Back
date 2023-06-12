@@ -3,7 +3,6 @@ const User = require("../models/User");
 
 async function index(req, res) {
   const filterBy = req.query.id;
-  console.log(filterBy);
   if (!filterBy) {
     const tweets = await Tweet.find().populate("user", "-password");
     for (let i = 0; i < tweets.length; i++) {
