@@ -1,11 +1,14 @@
 const User = require("../models/User");
 const formidable = require("formidable");
 
+async function index(req, res) {
+  // El alcance de este proyecto no lo incluye
+}
+
 async function show(req, res) {
   const user = await User.findById(req.params.id);
   const followers = await User.find({ _id: { $in: user.followers } });
   const following = await User.find({ _id: { $in: user.following } });
-
   return res.json({
     firstname: user.firstname,
     lastname: user.lastname,
@@ -16,21 +19,6 @@ async function show(req, res) {
     followers: followers,
     following: following,
     id: user._id,
-  });
-}
-
-async function showLoggedUser(req, res) {
-  const user = await User.findById(req.auth.id);
-  return res.json({
-    id: user._id,
-    firstname: user.firstname,
-    lastname: user.lastname,
-    email: user.email,
-    username: user.username,
-    image: user.image,
-    description: user.description,
-    followers: user.followers,
-    following: user.following,
   });
 }
 
@@ -57,7 +45,6 @@ async function store(req, res) {
       res.json(err);
     }
   });
-
   return res.json("Se ha creado un nuevo usuario");
 }
 
@@ -84,9 +71,19 @@ async function storeFollower(req, res) {
   return res.json("Estás siguiendo a este usuario");
 }
 
+async function update(req, res) {
+  // El alcance de este proyecto no lo incluye
+}
+
+async function destroy(req, res) {
+  // El alcance de este proyecto no lo incluye
+}
+
 module.exports = {
+  index,
   show,
   store,
-  showLoggedUser,
+  update,
+  destroy,
   storeFollower,
 };

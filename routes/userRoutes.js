@@ -3,10 +3,10 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const { expressjwt: checkJwt } = require("express-jwt");
 
-router.get("/user/:id", userController.show);
-router.post("/user", userController.store);
+router.get("/users/:id", userController.show);
+router.post("/users", userController.store);
 router.post(
-  "/user/follow",
+  "/users/follow",
   checkJwt({ secret: process.env.SECRET, algorithms: ["HS256"] }),
   userController.storeFollower,
 );

@@ -9,6 +9,10 @@ async function index(req, res) {
   return res.json(tweets);
 }
 
+async function show(req, res) {
+  // El alcance de este proyecto no lo incluye
+}
+
 async function store(req, res) {
   const newTweet = new Tweet({
     content: req.body.content,
@@ -18,6 +22,10 @@ async function store(req, res) {
   });
   await newTweet.save();
   return res.json(newTweet);
+}
+
+async function update(req, res) {
+  // El alcance de este proyecto no lo incluye
 }
 
 async function destroy(req, res) {
@@ -73,7 +81,9 @@ async function dislikeTweet(req, res) {
 }
 module.exports = {
   index,
+  show,
   store,
+  update,
   destroy,
   likeTweet,
   dislikeTweet,
