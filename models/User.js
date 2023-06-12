@@ -1,39 +1,42 @@
 const { mongoose, Schema } = require("../db");
 const bcrypt = require("bcryptjs");
 
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
+const userSchema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    firstname: {
+      type: String,
+      required: true,
+    },
+    lastname: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      maxlength: 120,
+    },
+    image: {
+      type: String,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    following: [{ type: Schema.Types.ObjectId, ref: "User" }],
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  firstname: {
-    type: String,
-    required: true,
-  },
-  lastname: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String,
-    maxlength: 120,
-  },
-  image: {
-    type: String,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  followers: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  following: [{ type: Schema.Types.ObjectId, ref: "User" }],
-});
+  { toObject: { virtuals: true } },
+);
 
 userSchema.methods.toJSON = function () {
   const user = this.toObject();

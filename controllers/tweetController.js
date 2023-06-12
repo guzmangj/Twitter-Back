@@ -5,13 +5,13 @@ async function index(req, res) {
   const filterBy = req.query.id;
   console.log(filterBy);
   if (!filterBy) {
-    const tweets = await Tweet.find().populate("user");
+    const tweets = await Tweet.find().populate("user", "-password");
     for (let i = 0; i < tweets.length; i++) {
       tweets[i].formattedData = formattedData(tweets[i].date);
     }
     return res.json(tweets);
   } else {
-    const tweets = await Tweet.find({ user: req.query.id }).populate("user");
+    const tweets = await Tweet.find({ user: req.query.id }).populate("user", "-password");
     for (let i = 0; i < tweets.length; i++) {
       tweets[i].formattedData = formattedData(tweets[i].date);
     }
