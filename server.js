@@ -28,11 +28,6 @@ app.listen(APP_PORT, () => {
   console.log(`[Express] Ingresar a http://localhost:${APP_PORT}.\n`);
 });
 
-/**
- * Este último código se utilza para cerrar la conexión a la base de datos en
- * el momento en que se "apaga" el servidor de Express, es decir, cuando se
- * hace CTRL+C para "matar" al proceso.
- */
 process.on("SIGINT", function () {
   const { mongoose } = require("./db");
   mongoose.connection.close(function () {
@@ -40,16 +35,3 @@ process.on("SIGINT", function () {
     process.exit(0);
   });
 });
-
-/**
- * Otras notas:
- *
- * El orden de las siguiente líneas de código es importante:
- *    sessions(app);
- *    passport(app);
- *    routes(app);
- *
- * No se puede usar Passport sin antes haber configurado la sessiones en Express.
- * No se puede crear rutas privadas sin antes haber configurado Passport.
- *
- */
